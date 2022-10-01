@@ -1,0 +1,35 @@
+﻿apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  creationTimestamp: '2022-09-26T12:20:31Z'
+  generation: 1
+  managedFields:
+    - apiVersion: keda.sh/v1alpha1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:spec':
+          .: {}
+          'f:scaleTargetRef':
+            .: {}
+            'f:name': {}
+          'f:triggers': {}
+      manager: Mozilla
+      operation: Update
+      time: '2022-09-26T12:20:31Z'
+  name: kedartemis-consumer-scaled-object-2
+  namespace: labs-dev
+  resourceVersion: '1064060234'
+  uid: 3c542276-1002-48c8-89c5-a8fee764b29a
+spec:
+  scaleTargetRef:
+    name: sailfish-example-consumer
+  triggers:
+    - authenticationRef:
+        name: trigger-auth-sailfish
+      metadata:
+        brokerAddress: sailfishWork
+        brokerName: sailfish-broker
+        managementEndpoint: 'sailfish-broker-hdls-svc.labs-dev.svc.cluster.local:8161'
+        queueLength: '10'
+        queueName: sailfishWork
+      type: artemis-queue

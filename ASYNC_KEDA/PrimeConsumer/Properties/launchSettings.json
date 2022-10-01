@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "PrimeConsumer": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "USER": "guest",
+        "ADDRESS": "myaddress",
+        "PASSWORD": "guest",
+        "HOST": "localhost",
+        "PORT": "5672"
+      }
+    }
+  }
+}

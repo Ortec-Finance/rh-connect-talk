@@ -1,0 +1,23 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: sailfish-example-producer
+  labels:
+    app: sailfish-example-producer
+    app.kubernetes.io/component: sailfish-example-producer
+    app.kubernetes.io/instance: sailfish-example-producer
+    app.kubernetes.io/name: sailfish-example-producer
+    app.kubernetes.io/part-of: sample-app
+    app.openshift.io/runtime-version: cloud-producer-501
+spec:
+  host: PRODUCERNAME-NAMESPACE.apps.CLUSTER_URL # Value will be set in kustomize overlay
+  to:
+    kind: Service
+    name: sailfish-example-producer
+    weight: 100
+  port:
+    targetPort: 9000-tcp
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None

@@ -1,0 +1,35 @@
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: trigger-auth-sailfish
+spec:
+  secretTargetRef:
+    - parameter: username
+      name: sailfish-broker-credentials-secret
+      key: AMQ_USER
+    - parameter: password
+      name: sailfish-broker-credentials-secret
+      key: AMQ_PASSWORD
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: keda-sailfish-consumer-scaled-object
+spec:
+  minReplicaCount: 0
+  maxReplicaCount: 10 # Guardrail
+  pollingInterval: 5
+  scaleTargetRef:
+    name: sailfish-example-consumer
+  triggers:
+    - authenticationRef:
+        name: trigger-auth-sailfish
+      metadata:
+        brokerAddress: sailfishWork
+        brokerName: amq-broker
+        managementEndpoint: 'BROKERNAME-hdls-svc.NAMESPACE.svc.cluster.local:8161' # overwritten in kustomize overlay
+        password: ARTEMIS_PASSWORD
+        queueLength: '1'
+        queueName: sailfishWork
+        username: ARTEMIS_USER
+      type: artemis-queue
