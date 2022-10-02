@@ -1,5 +1,9 @@
 bases:
-  - ../base
+  - ../../base
+
+patchesStrategicMerge: 
+  - consumer.yaml
+  - producer.yaml  
 
 patchesJson6902:
 - target:

@@ -1,0 +1,3 @@
+resources:
+  - network-policies.yaml
+  - knative-prime.yaml

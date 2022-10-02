@@ -21,8 +21,6 @@ spec:
         app.kubernetes.io/component: sailfish-example-producer
         app.kubernetes.io/name: sailfish-example-producer
         deploymentconfig: sailfish-example-producer
-      annotations:
-        openshift.io/generated-by: OpenShiftWebConsole
     spec:
       containers:
         - name: sailfish-example-producer
