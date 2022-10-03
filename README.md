@@ -3,6 +3,15 @@
  Ortec Finance conducts a research towards High Performance Cloud Computing. 
  This repository contains prototypes of synchronous and asyncrohonous cloud applications.
 
+# Prerequisite
+
+1. RedHat Openshift 4.X
+2. KEDA operator for Openshift.
+3. Red Hat Integration - AMQ Broker for RHEL 8 (Multiarch) operator Openshift.
+4. KEDA  instance in "keda" namespace.
+5. KNativeServing instance in "knative-serving" namespace.
+
+
 # Getting Started
 ```bash
  Prototype
