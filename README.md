@@ -8,8 +8,9 @@
 1. RedHat Openshift 4.X
 2. KEDA operator for Openshift.
 3. Red Hat Integration - AMQ Broker for RHEL 8 (Multiarch) operator Openshift.
-4. KEDA  instance in "keda" namespace.
-5. KNativeServing instance in "knative-serving" namespace.
+4. Serverless operator for Openshift.
+5. KEDA  instance in "keda" namespace.
+6. KNativeServing instance in "knative-serving" namespace.
 
 
 # Getting Started
