@@ -1,7 +1,7 @@
 # Introduction 
  
  Ortec Finance conducts a research towards High Performance Cloud Computing. 
- This repository contains prototypes of synchronous and asyncrohonous cloud applications.
+ This repository contains prototypes of synchronous and asynchronous cloud applications.
 
 # Prerequisite
 
