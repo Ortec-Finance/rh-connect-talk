@@ -8,18 +8,14 @@ spec:
       annotations:
         autoscaling.knative.dev/max-scale: "20"
     spec:
-      containerConcurrency: 1
-      timeoutSeconds: 300
-
-      # Using Nodes selector and tolerations is optional, we isolated these workloads with a dedicated machineset.
-
       nodeSelector:   # Node selector need to be enabled see: https://knative.dev/docs/serving/configuration/feature-flags/
         ortec-finance/application: glass 
       tolerations: #  # Tolerations need to be enabled see: https://knative.dev/docs/serving/configuration/feature-flags/
         - effect: NoSchedule
           key: ortec-finance
           value: glass-application
-          
+      containerConcurrency: 1
+      timeoutSeconds: 300
       containers:
         - image: knativeprime-image
           imagePullPolicy: Always

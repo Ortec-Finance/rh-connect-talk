@@ -45,3 +45,33 @@ patchesJson6902:
     - op: replace
       path: /spec/template/spec/containers/0/env/2/value
       value: BROKERNAME-hdls-svc.NAMESPACE.svc.cluster.local
+- target:
+    version: v1
+    kind: Deployment
+    name: sailfish-example-producer
+  # Replace 'value' with your URL
+  patch: |-
+    - op: add
+      path: /spec/template/spec/
+      value: 
+        nodeSelector:
+          ortec-finance/application: glass
+        tolerations:
+          - key: ortec-finance
+            value: glass-application
+            effect: NoSchedule
+- target:
+    version: v1
+    kind: Deployment
+    name: sailfish-example-consumer
+  # Replace 'value' with your URL
+  patch: |-
+    - op: add
+      path: /spec/template/spec/
+      value: 
+        nodeSelector:
+          ortec-finance/application: glass
+        tolerations:
+          - key: ortec-finance
+            value: glass-application
+            effect: NoSchedule

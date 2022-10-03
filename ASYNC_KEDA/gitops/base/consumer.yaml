@@ -57,17 +57,7 @@ spec:
           terminationMessagePolicy: File
           imagePullPolicy: Always
       restartPolicy: Always
-      timeoutSeconds: 300
-      
-      # Using Nodes selector and tolerations is optional, we isolated these workloads with a dedicated machineset.
-      nodeSelector:
-        ortec-finance/application: glass
-
-      tolerations:
-        - key: ortec-finance
-          value: glass-application
-          effect: NoSchedule
-          
+      timeoutSeconds: 300    
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
       securityContext: {}

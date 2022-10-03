@@ -5,3 +5,17 @@ images:
   - name: knativeprime-image
     newName: ghcr.io/ortec-finance/knativeprime
     newTag: develop
+
+
+patchesJson6902:
+- target:
+    version: v1
+    group: serving.knative.dev
+    kind: Service
+    name: knative-prime
+  # Replace 'value' with your URL
+  patch: |-
+    - op: add
+      path: /spec/template/
+      value: 
+        nodeSelector: ortec-finance/application: glass
