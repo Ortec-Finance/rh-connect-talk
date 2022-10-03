@@ -28,7 +28,7 @@ spec:
       containers:
         - name: sailfish-example-consumer
           image: >-
-            ofocp.azurecr.io/labs/cloud-consumer:v0.5
+            consumer-image
           ports:
             - containerPort: 8080
               protocol: TCP
@@ -46,7 +46,7 @@ spec:
                   name: sailfish-broker-credentials-secret
                   key: AMQ_PASSWORD
             - name: HOST
-              value: BROKERNAME-hdls-svc.NAMESPACE.svc.cluster.local # overwritten in overlay
+              value: BROKERNAME-hdls-svc.NAMESPACE.svc.cluster.local 
             - name: PORT
               value: '5672'
           resources:

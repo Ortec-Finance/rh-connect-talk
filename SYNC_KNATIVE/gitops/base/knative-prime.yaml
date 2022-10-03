@@ -4,6 +4,9 @@ metadata:
   name: knative-prime
 spec:
   template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/max-scale: "20"
     spec:
       containerConcurrency: 1
       timeoutSeconds: 300
@@ -18,7 +21,7 @@ spec:
           value: glass-application
           
       containers:
-        - image: YOUR_IMAGE
+        - image: bohdant/of:knative3
           imagePullPolicy: Always
           name: knative-prime
           ports:
@@ -36,7 +39,6 @@ spec:
                 memory: "1000M"
                 cpu: "500m"
       enableServiceLinks: false
-      timeoutSeconds: 300
   traffic:
     - latestRevision: true
       percent: 100

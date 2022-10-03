@@ -1,9 +1,13 @@
 bases:
   - ../../base
 
-patchesStrategicMerge: 
-  - consumer.yaml
-  - producer.yaml  
+images:
+  - name: consumer-image
+    newName: ghcr.io/ortec-finance/kedaconsumer
+    newTag: latest
+  - name: producer-image
+    newName: ghcr.io/ortec-finance/kedaproducer
+    newTag: latest
 
 patchesJson6902:
 - target:
@@ -14,7 +18,7 @@ patchesJson6902:
   patch: |-
     - op: replace
       path: /spec/template/spec/containers/0/env/3/value
-      value: BROKERNAME-hdls-svc.NAMESPACE.svc.cluster.local
+      value: sailfish-broker-hdls-svc.hpc-sandbox.svc.cluster.local
 - target:
     version: v1alpha1
     kind: ScaledObject
@@ -23,7 +27,7 @@ patchesJson6902:
   patch: |-
     - op: replace
       path: /spec/triggers/0/metadata/managementEndpoint
-      value: 'BROKERNAME-hdls-svc.NAMESPACE.svc.cluster.local:8161'   
+      value: sailfish-broker-hdls-svc.hpc-sandbox.svc.cluster.local:8161
 - target:
     version: v1
     kind: Route
@@ -32,7 +36,7 @@ patchesJson6902:
   patch: |-
     - op: replace
       path: /spec/host
-      value: PRODUCERNAME-NAMESPACE.apps.CLUSTER_URL
+      value: sailfish-example-producer-hpc-sandbox.apps.ocp.ortec-finance.com
 - target:
     version: v1
     kind: Deployment
@@ -41,4 +45,4 @@ patchesJson6902:
   patch: |-
     - op: replace
       path: /spec/template/spec/containers/0/env/2/value
-      value: BROKERNAME-hdls-svc.NAMESPACE.svc.cluster.local
+      value: sailfish-broker-hdls-svc.hpc-sandbox.svc.cluster.local

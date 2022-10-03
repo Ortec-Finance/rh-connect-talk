@@ -1,5 +1,7 @@
 bases:
   - ../../base
 
-patchesStrategicMerge: 
-  - knative-prime.yaml
+images:
+  - name: knativeprime-image
+    newName: ghcr.io/ortec-finance/knativeprime
+    newTag: latest
