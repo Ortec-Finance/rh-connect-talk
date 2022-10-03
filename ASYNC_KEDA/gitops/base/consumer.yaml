@@ -22,8 +22,6 @@ spec:
         app.kubernetes.io/component: sailfish-example-consumer
         app.kubernetes.io/name: sailfish-example-consumer
         deploymentconfig: sailfish-example-consumer
-      annotations:
-        openshift.io/generated-by: OpenShiftWebConsole
     spec:
       containers:
         - name: sailfish-example-consumer

@@ -21,7 +21,7 @@ spec:
           value: glass-application
           
       containers:
-        - image: bohdant/of:knative3
+        - image: knativeprime-image
           imagePullPolicy: Always
           name: knative-prime
           ports:

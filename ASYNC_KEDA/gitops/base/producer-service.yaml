@@ -8,7 +8,6 @@ metadata:
     app.kubernetes.io/instance: sailfish-example-producer
     app.kubernetes.io/name: sailfish-example-producer
     app.kubernetes.io/part-of: sample-app
-    app.openshift.io/runtime-version: cloud-producer-501
 spec:
   ipFamilies:
     - IPv4
