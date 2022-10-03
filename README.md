@@ -3,7 +3,7 @@
  Ortec Finance conducts a research towards High Performance Cloud Computing. 
  This repository contains prototypes of synchronous and asynchronous cloud applications.
 
-# Prerequisite
+# Prerequisites
 
 1. RedHat Openshift 4.X
 2. KEDA operator for Openshift.
