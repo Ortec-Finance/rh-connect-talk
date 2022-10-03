@@ -5,6 +5,7 @@
 
 # Prerequisites
 
+Cluster related:
 1. RedHat Openshift 4.X
 2. KEDA operator for Openshift.
 3. Red Hat Integration - AMQ Broker for RHEL 8 (Multiarch) operator Openshift.
@@ -12,6 +13,10 @@
 5. KEDA  instance in "keda" namespace.
 6. KNativeServing instance in "knative-serving" namespace.
 
+Local machine:
+1. oc cli tool
+2. kustomize
+3. Docker / Podman
 
 # Getting Started
 ```bash
@@ -58,4 +63,4 @@ If you want to modify the code an build your own image
 
 # Slides
 
-{LINK TO SLIDES}
+Slide can be found [here](rh-summit-connect%20slides.pdf)
