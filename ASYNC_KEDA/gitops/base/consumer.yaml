@@ -1,0 +1,66 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: sailfish-example-consumer
+  labels:
+    app: sailfish-example-consumer
+    app.kubernetes.io/component: sailfish-example-consumer
+    app.kubernetes.io/instance: sailfish-example-consumer
+    app.kubernetes.io/name: sailfish-example-consumer
+    app.kubernetes.io/part-of: sample-app
+    app.openshift.io/runtime: dotnet
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sailfish-example-consumer
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: sailfish-example-consumer
+        app.kubernetes.io/component: sailfish-example-consumer
+        app.kubernetes.io/name: sailfish-example-consumer
+        deploymentconfig: sailfish-example-consumer
+    spec:
+      containers:
+        - name: sailfish-example-consumer
+          image: >-
+            consumer-image
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          env:
+            - name: ADDRESS
+              value: sailfishWork
+            - name: USER
+              valueFrom:
+                secretKeyRef:
+                  name: sailfish-broker-credentials-secret
+                  key: AMQ_USER
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: sailfish-broker-credentials-secret
+                  key: AMQ_PASSWORD
+            - name: HOST
+              value: BROKERNAME-hdls-svc.NAMESPACE.svc.cluster.local 
+            - name: PORT
+              value: '5672'
+          resources:
+            requests:
+              memory: "250M"
+              cpu: "300m"
+            limits:
+              memory: "1000M"
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      timeoutSeconds: 300    
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600

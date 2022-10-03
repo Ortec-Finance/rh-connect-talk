@@ -1,0 +1,29 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: sailfish-example-producer
+  labels:
+    app: sailfish-example-producer
+    app.kubernetes.io/component: sailfish-example-producer
+    app.kubernetes.io/instance: sailfish-example-producer
+    app.kubernetes.io/name: sailfish-example-producer
+    app.kubernetes.io/part-of: sample-app
+spec:
+  ipFamilies:
+    - IPv4
+  ports:
+    - name: 8080-tcp
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+    - name: 9000-tcp
+      protocol: TCP
+      port: 9000
+      targetPort: 9000
+  internalTrafficPolicy: Cluster
+  type: ClusterIP
+  ipFamilyPolicy: SingleStack
+  sessionAffinity: None
+  selector:
+    app: sailfish-example-producer
+    deploymentconfig: sailfish-example-producer

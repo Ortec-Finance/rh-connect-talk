@@ -1,0 +1,77 @@
+bases:
+  - ../../base
+
+images:
+  - name: consumer-image
+    newName: ghcr.io/ortec-finance/kedaconsumer
+    newTag: develop
+  - name: producer-image
+    newName: ghcr.io/ortec-finance/kedaproducer
+    newTag: develop
+patchesJson6902:
+- target:
+    version: v1
+    kind: Deployment
+    name: sailfish-example-consumer
+  # Replace 'value' with your URL  
+  patch: |-
+    - op: replace
+      path: /spec/template/spec/containers/0/env/3/value
+      value: BROKERNAME-hdls-svc.NAMESPACE.svc.cluster.local
+- target:
+    version: v1alpha1
+    kind: ScaledObject
+    name: keda-sailfish-consumer-scaled-object
+  # Replace 'value' with your URL
+  patch: |-
+    - op: replace
+      path: /spec/triggers/0/metadata/managementEndpoint
+      value: 'BROKERNAME-hdls-svc.NAMESPACE.svc.cluster.local:8161'   
+- target:
+    version: v1
+    kind: Route
+    name: sailfish-example-producer
+  # Replace 'value' with your URL
+  patch: |-
+    - op: replace
+      path: /spec/host
+      value: PRODUCERNAME-NAMESPACE.apps.CLUSTER_URL
+- target:
+    version: v1
+    kind: Deployment
+    name: sailfish-example-producer
+  # Replace 'value' with your URL
+  patch: |-
+    - op: replace
+      path: /spec/template/spec/containers/0/env/2/value
+      value: BROKERNAME-hdls-svc.NAMESPACE.svc.cluster.local
+- target:
+    version: v1
+    kind: Deployment
+    name: sailfish-example-producer
+  # Replace 'value' with your URL
+  patch: |-
+    - op: add
+      path: /spec/template/spec/
+      value: 
+        nodeSelector:
+          ortec-finance/application: glass
+        tolerations:
+          - key: ortec-finance
+            value: glass-application
+            effect: NoSchedule
+- target:
+    version: v1
+    kind: Deployment
+    name: sailfish-example-consumer
+  # Replace 'value' with your URL
+  patch: |-
+    - op: add
+      path: /spec/template/spec/
+      value: 
+        nodeSelector:
+          ortec-finance/application: glass
+        tolerations:
+          - key: ortec-finance
+            value: glass-application
+            effect: NoSchedule

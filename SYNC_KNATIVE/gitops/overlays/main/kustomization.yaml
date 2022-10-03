@@ -1,0 +1,7 @@
+bases:
+  - ../../base
+
+images:
+  - name: knativeprime-image
+    newName: ghcr.io/ortec-finance/knativeprime
+    newTag: latest

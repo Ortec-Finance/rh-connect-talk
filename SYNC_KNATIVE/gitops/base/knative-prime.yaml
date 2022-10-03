@@ -1,0 +1,40 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: knative-prime
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/max-scale: "20"
+    spec:
+      nodeSelector:   # Node selector need to be enabled see: https://knative.dev/docs/serving/configuration/feature-flags/
+        ortec-finance/application: glass 
+      tolerations: #  # Tolerations need to be enabled see: https://knative.dev/docs/serving/configuration/feature-flags/
+        - effect: NoSchedule
+          key: ortec-finance
+          value: glass-application
+      containerConcurrency: 1
+      timeoutSeconds: 300
+      containers:
+        - image: knativeprime-image
+          imagePullPolicy: Always
+          name: knative-prime
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          readinessProbe:
+            successThreshold: 1
+            tcpSocket:
+              port: 0
+          resources:
+              requests:
+                memory: "250M"
+                cpu: "300m"
+              limits:
+                memory: "1000M"
+                cpu: "500m"
+      enableServiceLinks: false
+  traffic:
+    - latestRevision: true
+      percent: 100

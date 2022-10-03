@@ -1,0 +1,8 @@
+resources:
+  - network-policies.yaml
+  - consumer.yaml
+  - keda.yaml
+  - producer.yaml
+  - producer-service.yaml
+  - producer-route.yaml
+  - broker.yaml
