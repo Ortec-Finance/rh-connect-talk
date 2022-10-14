@@ -47,32 +47,11 @@ patchesJson6902:
       path: /spec/template/spec/containers/0/env/2/value
       value: sailfish-broker-hdls-svc.hpc-sandbox.svc.cluster.local
 - target:
-    version: v1
-    kind: Deployment
-    name: sailfish-example-producer
-  # Replace 'value' with your URL
+    version: v1beta1
+    kind: ActiveMQArtemis
+    group: broker.amq.io
+    name: sailfish-broker
   patch: |-
-    - op: add
-      path: /spec/template/spec/
-      value: 
-        nodeSelector:
-          ortec-finance/application: glass
-        tolerations:
-          - key: ortec-finance
-            value: glass-application
-            effect: NoSchedule
-- target:
-    version: v1
-    kind: Deployment
-    name: sailfish-example-consumer
-  # Replace 'value' with your URL
-  patch: |-
-    - op: add
-      path: /spec/template/spec/
-      value: 
-        nodeSelector:
-          ortec-finance/application: glass
-        tolerations:
-          - key: ortec-finance
-            value: glass-application
-            effect: NoSchedule
+    - op: replace
+      path: /spec/deploymentPlan/storage/storageClassName
+      value: managed-premium  
