@@ -1,6 +1,6 @@
 resources:
   - network-policies.yaml
-  - consumer.yaml
+  - consumer-job.yaml
   - keda.yaml
   - producer.yaml
   - producer-service.yaml

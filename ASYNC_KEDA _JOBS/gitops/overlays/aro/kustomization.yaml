@@ -2,32 +2,14 @@ bases:
   - ../../base
 
 images:
-  - name: consumer-image
-    newName: ghcr.io/ortec-finance/kedaconsumer
+  - name: consumer-job-image
+    newName: ghcr.io/ortec-finance/kedaconsumerjob
     newTag: latest
   - name: producer-image
     newName: ghcr.io/ortec-finance/kedaproducer
     newTag: latest
 
 patchesJson6902:
-- target:
-    version: v1
-    kind: Deployment
-    name: sailfish-example-consumer
-  # Replace 'value' with your URL  
-  patch: |-
-    - op: replace
-      path: /spec/template/spec/containers/0/env/3/value
-      value: sailfish-broker-hdls-svc.hpc-sandbox.svc.cluster.local
-- target:
-    version: v1alpha1
-    kind: ScaledObject
-    name: keda-sailfish-consumer-scaled-object
-  # Replace 'value' with your URL
-  patch: |-
-    - op: replace
-      path: /spec/triggers/0/metadata/managementEndpoint
-      value: sailfish-broker-hdls-svc.hpc-sandbox.svc.cluster.local:8161
 - target:
     version: v1
     kind: Route
