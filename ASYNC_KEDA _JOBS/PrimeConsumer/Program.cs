@@ -16,10 +16,22 @@ var consumer = await connection.CreateConsumerAsync(new ConsumerConfiguration
     Credit = 1
 });
 
+bool isActive = true;
+
 PrimeCalculator primeCalculator = new PrimeCalculator();
 
-while (connection.IsOpened)
+
+DateTime latestCommit = DateTime.Now;
+
+long timeout = Convert.ToInt32(Environment.GetEnvironmentVariable("TIMEOUT"));
+
+while (connection.IsOpened && isActive)
 {
+    if ((DateTime.Now - latestCommit).TotalSeconds > timeout)
+    {
+        isActive = false;
+        break;
+    }
     Console.WriteLine("Connection open (1)  " + DateTime.Now);
     var messageIn = await consumer.ReceiveAsync();
     Console.WriteLine("Recieved a message " + DateTime.Now);
@@ -35,6 +47,7 @@ while (connection.IsOpened)
         await consumer.AcceptAsync(messageIn, transaction);
         Console.WriteLine("Commited transaction " + DateTime.Now);
         await transaction.CommitAsync();
+        latestCommit = DateTime.Now;
     }
     catch (Exception e)
     {
@@ -45,5 +58,7 @@ while (connection.IsOpened)
         await consumer.AcceptAsync(messageIn);
     }
 }
+
+Console.WriteLine("FINISHED");
 
 
