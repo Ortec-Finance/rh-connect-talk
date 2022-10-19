@@ -1,0 +1,67 @@
+apiVersion: keda.sh/v1alpha1
+kind: KedaController
+metadata:
+  name: keda
+  namespace: keda
+spec:
+  operator:
+    logLevel: info
+    logEncoder: console
+  metricsServer:
+    logLevel: '0'
+  watchNamespace: hpc-sandbox
+---
+
+
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: trigger-auth-sailfish
+spec:
+  secretTargetRef:
+    - parameter: username
+      name: sailfish-broker-credentials-secret
+      key: AMQ_USER
+    - parameter: password
+      name: sailfish-broker-credentials-secret
+      key: AMQ_PASSWORD
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: keda-sailfish-consumer-scaled-object
+spec:
+  minReplicaCount: 0
+  maxReplicaCount: 10 # Guardrail
+  pollingInterval: 5
+  scaleTargetRef:
+    name: sailfish-example-consumer
+  triggers:
+    - authenticationRef:
+        name: trigger-auth-sailfish
+      metadata:
+        brokerAddress: sailfishWork
+        brokerName: amq-broker
+        managementEndpoint: 'BROKERNAME-hdls-svc.NAMESPACE.svc.cluster.local:8161' # overwritten in kustomize overlay
+        password: ARTEMIS_PASSWORD
+        queueLength: '1'
+        queueName: sailfishWork
+        username: ARTEMIS_USER
+      type: artemis-queue
+  advanced:                                          # Optional. Section to specify advanced options
+    horizontalPodAutoscalerConfig:                   # Optional. Section to specify HPA related options
+      behavior:                                      # Optional. Use to modify HPA's scaling behavior
+          scaleUp:
+            stabilizationWindowSeconds: 0
+            selectPolicy: Max
+            policies:
+              - type: Pods
+                value: 10                     
+                periodSeconds: 15
+          scaleDown:
+            stabilizationWindowSeconds: 300   # Makes the pods sticky for 5 minutes to prevent cold starts for subsequent tasks within this intervals
+            selectPolicy: Max
+            policies:
+              - type: Percent                 # Allows complete tear down
+                value: 100
+                periodSeconds: 15
