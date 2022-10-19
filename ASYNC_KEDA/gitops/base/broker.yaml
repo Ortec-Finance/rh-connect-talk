@@ -22,7 +22,7 @@ spec:
     persistenceEnabled: true
     storage:
       size: 4Gi
-      storageClassName: managed-premium # is azure specific
+      storageClassName: <STORAGE CLASS> # is in overlays
     requireLogin: true # this will generate secret with credentials
     size: 2
     enableMetricsPlugin: true

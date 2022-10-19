@@ -22,6 +22,12 @@ spec:
         app.kubernetes.io/name: sailfish-example-producer
         deploymentconfig: sailfish-example-producer
     spec:
+      nodeSelector:   # Node selector need to be enabled see: https://knative.dev/docs/serving/configuration/feature-flags/
+        ortec-finance/application: glass 
+      tolerations: #  # Tolerations need to be enabled see: https://knative.dev/docs/serving/configuration/feature-flags/
+        - effect: NoSchedule
+          key: ortec-finance
+          value: glass-application
       containers:
         - name: sailfish-example-producer
           image: >-

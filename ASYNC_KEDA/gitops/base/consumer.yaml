@@ -23,6 +23,12 @@ spec:
         app.kubernetes.io/name: sailfish-example-consumer
         deploymentconfig: sailfish-example-consumer
     spec:
+      nodeSelector:   # Node selector need to be enabled see: https://knative.dev/docs/serving/configuration/feature-flags/
+        ortec-finance/application: glass 
+      tolerations: #  # Tolerations need to be enabled see: https://knative.dev/docs/serving/configuration/feature-flags/
+        - effect: NoSchedule
+          key: ortec-finance
+          value: glass-application
       containers:
         - name: sailfish-example-consumer
           image: >-
@@ -50,7 +56,7 @@ spec:
           resources:
             requests:
               memory: "250M"
-              cpu: "300m"
+              cpu: "750m"
             limits:
               memory: "1000M"
           terminationMessagePath: /dev/termination-log

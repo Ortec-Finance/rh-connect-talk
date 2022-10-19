@@ -30,10 +30,9 @@ spec:
           resources:
               requests:
                 memory: "250M"
-                cpu: "300m"
+                cpu: "750m"
               limits:
                 memory: "1000M"
-                cpu: "500m"
       enableServiceLinks: false
   traffic:
     - latestRevision: true
