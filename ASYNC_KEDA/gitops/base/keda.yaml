@@ -48,3 +48,20 @@ spec:
         queueName: sailfishWork
         username: ARTEMIS_USER
       type: artemis-queue
+  advanced:                                          # Optional. Section to specify advanced options
+    horizontalPodAutoscalerConfig:                   # Optional. Section to specify HPA related options
+      behavior:                                      # Optional. Use to modify HPA's scaling behavior
+          scaleUp:
+            stabilizationWindowSeconds: 0
+            selectPolicy: Max
+            policies:
+              - type: Pods
+                value: 10                     
+                periodSeconds: 15
+          scaleDown:
+            stabilizationWindowSeconds: 300   # Makes the pods sticky for 5 minutes to prevent cold starts for subsequent tasks within this intervals
+            selectPolicy: Max
+            policies:
+              - type: Percent                 # Allows complete tear down
+                value: 100
+                periodSeconds: 15
