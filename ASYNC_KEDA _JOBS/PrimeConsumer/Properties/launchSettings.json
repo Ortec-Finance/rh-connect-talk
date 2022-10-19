@@ -4,10 +4,11 @@
       "commandName": "Project",
       "environmentVariables": {
         "USER": "guest",
-        "ADDRESS": "myaddress",
+        "ADDRESS": "SailfishWork",
         "PASSWORD": "guest",
         "HOST": "localhost",
-        "PORT": "5672"
+        "PORT": "5672",
+        "TIMEOUT": "10"
       }
     }
   }

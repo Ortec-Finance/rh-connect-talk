@@ -23,17 +23,24 @@ PrimeCalculator primeCalculator = new PrimeCalculator();
 
 DateTime latestCommit = DateTime.Now;
 
-long timeout = Convert.ToInt32(Environment.GetEnvironmentVariable("TIMEOUT"));
+int timeout = Convert.ToInt32(Environment.GetEnvironmentVariable("TIMEOUT"));
 
 while (connection.IsOpened && isActive)
 {
-    if ((DateTime.Now - latestCommit).TotalSeconds > timeout)
+    var cts = new CancellationTokenSource();
+    cts.Token.ThrowIfCancellationRequested();
+    cts.CancelAfter(timeout * 1000);
+    Console.WriteLine("Connection open (1)  " + DateTime.Now);
+    Message messageIn = null;
+    try
     {
-        isActive = false;
+        messageIn = await consumer.ReceiveAsync(cts.Token);
+    }
+    catch(Exception ex)
+    {
+        Console.WriteLine($"Connection timeout. Process is being shut down. {DateTime.Now}");
         break;
     }
-    Console.WriteLine("Connection open (1)  " + DateTime.Now);
-    var messageIn = await consumer.ReceiveAsync();
     Console.WriteLine("Recieved a message " + DateTime.Now);
     int num = messageIn.GetBody<int>();
     Console.WriteLine("Recieved the body of the message.Calculating. " + DateTime.Now);
