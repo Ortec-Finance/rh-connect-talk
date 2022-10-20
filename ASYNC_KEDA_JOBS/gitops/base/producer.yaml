@@ -7,7 +7,7 @@ metadata:
     app.kubernetes.io/component: sailfish-example-producer
     app.kubernetes.io/instance: sailfish-example-producer
     app.kubernetes.io/name: sailfish-example-producer
-    app.kubernetes.io/part-of: sample-app
+    app.kubernetes.io/part-of: sample-sailfish-app
     app.openshift.io/runtime: dotnet
 spec:
   replicas: 1
@@ -22,9 +22,9 @@ spec:
         app.kubernetes.io/name: sailfish-example-producer
         deploymentconfig: sailfish-example-producer
     spec:
-      nodeSelector:   # Node selector need to be enabled see: https://knative.dev/docs/serving/configuration/feature-flags/
+      nodeSelector:   
         ortec-finance/application: glass 
-      tolerations: #  # Tolerations need to be enabled see: https://knative.dev/docs/serving/configuration/feature-flags/
+      tolerations: #  
         - effect: NoSchedule
           key: ortec-finance
           value: glass-application
