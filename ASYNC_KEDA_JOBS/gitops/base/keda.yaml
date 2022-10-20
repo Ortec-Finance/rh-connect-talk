@@ -9,7 +9,7 @@ spec:
     logEncoder: console
   metricsServer:
     logLevel: '0'
-  watchNamespace: hpc-sandbox
+  watchNamespace: <NAMESPACE>
 ---
 
 

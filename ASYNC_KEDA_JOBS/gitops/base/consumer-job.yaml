@@ -41,7 +41,7 @@ spec:
                   name: sailfish-broker-credentials-secret
                   key: AMQ_PASSWORD
             - name: HOST
-              value: sailfish-broker-hdls-svc.hpc-sandbox.svc.cluster.local 
+              value: <BROKERNAME>-hdls-svc.<NAMESPACE>.svc.cluster.local 
             - name: PORT
               value: '5672'
           ports:
@@ -69,7 +69,7 @@ spec:
       metadata:
         brokerAddress: sailfishWork
         brokerName: amq-broker
-        managementEndpoint: 'sailfish-broker-hdls-svc.hpc-sandbox.svc.cluster.local:8161' # overwritten in kustomize overlay
+        managementEndpoint: '<BROKERNAME>-hdls-svc.<NAMESPACE>.svc.cluster.local' # overwritten in kustomize overlay
         password: ARTEMIS_PASSWORD
         queueLength: '1'
         queueName: sailfishWork
