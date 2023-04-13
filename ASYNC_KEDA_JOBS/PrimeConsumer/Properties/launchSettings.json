@@ -1,0 +1,15 @@
+{
+  "profiles": {
+    "PrimeConsumer": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "USER": "guest",
+        "ADDRESS": "SailfishWork",
+        "PASSWORD": "guest",
+        "HOST": "localhost",
+        "PORT": "5672",
+        "TIMEOUT": "10"
+      }
+    }
+  }
+}

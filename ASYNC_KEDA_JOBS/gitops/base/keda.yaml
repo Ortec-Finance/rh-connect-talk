@@ -1,0 +1,28 @@
+apiVersion: keda.sh/v1alpha1
+kind: KedaController
+metadata:
+  name: keda
+  namespace: keda
+spec:
+  operator:
+    logLevel: info
+    logEncoder: console
+  metricsServer:
+    logLevel: '0'
+  watchNamespace: <NAMESPACE>
+---
+
+
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: trigger-auth-sailfish
+spec:
+  secretTargetRef:
+    - parameter: username
+      name: sailfish-broker-credentials-secret
+      key: AMQ_USER
+    - parameter: password
+      name: sailfish-broker-credentials-secret
+      key: AMQ_PASSWORD
+---

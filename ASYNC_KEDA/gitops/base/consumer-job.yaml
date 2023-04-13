@@ -1,0 +1,58 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledJob
+metadata:
+  name: consumer-job
+spec:
+  jobTargetRef:
+    template:
+      spec:
+        containers:
+        - name: consumer-job
+          image: ghcr.io/ortec-finance/kedaconsumer
+          imagePullPolicy: Always
+          env:
+            - name: ADDRESS
+              value: sailfishWork
+            - name: USER
+              valueFrom:
+                secretKeyRef:
+                  name: sailfish-broker-credentials-secret
+                  key: AMQ_USER
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: sailfish-broker-credentials-secret
+                  key: AMQ_PASSWORD
+            - name: HOST
+              value: sailfish-broker-hdls-svc.hpc-sandbox.svc.cluster.local 
+            - name: PORT
+              value: '5672'
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          resources:
+            requests:
+              memory: "250M"
+              cpu: "750m"
+            limits:
+              memory: "1000M"
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File          
+        restartPolicy: Never
+    backoffLimit: 4  
+  pollingInterval: 10             # Optional. Default: 30 seconds
+  maxReplicaCount: 10             # Optional. Default: 100
+  successfulJobsHistoryLimit: 3   # Optional. Default: 100. How many completed jobs should be kept.
+  failedJobsHistoryLimit: 2       # Optional. Default: 100. How many failed jobs should be kept.
+  triggers:
+    - authenticationRef:
+        name: trigger-auth-sailfish
+      metadata:
+        brokerAddress: sailfishWork
+        brokerName: amq-broker
+        managementEndpoint: 'sailfish-broker-hdls-svc.hpc-sandbox.svc.cluster.local:8161' # overwritten in kustomize overlay
+        password: ARTEMIS_PASSWORD
+        queueLength: '1'
+        queueName: sailfishWork
+        username: ARTEMIS_USER
+      type: artemis-queue
